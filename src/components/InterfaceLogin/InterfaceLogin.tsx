@@ -1,7 +1,12 @@
+import { useState } from "react";
 import { AbsoluteCenter, Box , Card, Field, Input, Button, Stack, Center} from "@chakra-ui/react";
 import { PasswordInput, PasswordStrengthMeter } from "../ui/password-input";
+import zxcvbn from "zxcvbn";
 
 export const InterfaceLogin = () => {
+    const [password, setPassword] = useState("");
+    const strengthScore = zxcvbn(password).score;
+
     return (
         <>
             <Box width="100%">
@@ -26,9 +31,9 @@ export const InterfaceLogin = () => {
                                 <Field.Root>
                                     <Stack w="full">
                                         <Box pos="relative" w="full">                                       
-                                            <PasswordInput />
+                                            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
                                             <Field.Label >Password</Field.Label>
-                                            <PasswordStrengthMeter value={4}/>
+                                            <PasswordStrengthMeter value={strengthScore}/>
                                         </Box>    
                                     </Stack>
                                 </Field.Root>
